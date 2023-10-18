@@ -51,7 +51,15 @@ fun main(args: Array<String>) {
 
         //printing the board
         for (row in board) {
-            println(row)
+            for (item in row) {
+                when (item) {
+                    0 -> print("O ")
+                    1 -> print(coloryellow + "● " + colorreset)
+                    2 -> print(colorred + "● " + colorreset)
+                }
+            }
+            println("")
+            //println(row)
         }
 
         //printing the current player
