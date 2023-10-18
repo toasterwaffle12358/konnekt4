@@ -1,4 +1,5 @@
-
+//imports
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
@@ -9,6 +10,42 @@ fun main(args: Array<String>) {
     val colorYellow = "\u001b[38;5;226m"
     // Resets previous color codes
     val colorReset = "\u001b[0m"
+
+
+    //functions
+    //function to check rows to see if there's a 4 in a row in them, will be run on the row of the last placed piece
+    fun winCheckRow(item: Int, playerNumber: Int, piecesInARowCounter: Int, board: MutableList<MutableList<Int>>): Int {
+        var piecesInARowCounterMutable = piecesInARowCounter
+        if (item == playerNumber) {
+            piecesInARowCounterMutable++
+            if (piecesInARowCounterMutable >= 4) {
+
+                for (row in board) {
+                    for (item in row) {
+                        when (item) {
+                            0 -> print("O ")
+                            1 -> print(colorYellow + "● " + colorReset)
+                            2 -> print(colorRed + "● " + colorReset)
+                        }
+                    }
+                    println("")
+                    //println(row)
+                }
+
+                when (playerNumber) {
+                    1 -> println("omg player\u001B[38;5;226m one,\u001B[0m you won! no way omg!!!")
+                    2 -> println("omg player\u001B[38;5;197m two,\u001B[0m you won! no way omg!!!")
+                }
+                exitProcess(0)
+            }
+        } else {
+            piecesInARowCounterMutable = 0
+        }
+        return piecesInARowCounterMutable
+    }
+    fun winCheckColumn() {
+
+    }
 
     //will be true until game is won or quit, used to keep game while loop running
     var playing = true
@@ -44,9 +81,10 @@ fun main(args: Array<String>) {
         print("\u001b[H"+"\u001b[2J")
 
         //setting up the playerNumber variable, it will be used later to place the pieces so each player places a different int.
-        when (isCurrentPlayerOne) {
-            true ->  playerNumber = 1
-            false -> playerNumber = 2
+        if (isCurrentPlayerOne) {
+            playerNumber = 1
+        } else {
+            playerNumber = 2
         }
 
         //printing the board
@@ -54,8 +92,8 @@ fun main(args: Array<String>) {
             for (item in row) {
                 when (item) {
                     0 -> print("O ")
-                    1 -> print(coloryellow + "● " + colorreset)
-                    2 -> print(colorred + "● " + colorreset)
+                    1 -> print(colorYellow + "● " + colorReset)
+                    2 -> print(colorRed + "● " + colorReset)
                 }
             }
             println("")
@@ -110,23 +148,36 @@ fun main(args: Array<String>) {
         }
 
         //testing purposes, remove later
-        println("your last play was put on coordinate $lastPiecePlacedCoord")
+        //println("your last play was put on coordinate $lastPiecePlacedCoord")
+
+        //adding space for new board
+        println("\n \n \n")
 
         //testing to see if user won
+        //testing rows
         when (lastPiecePlacedCoord[1]) {
             6 -> for (item in boardLineSix){
-                if (item == playerNumber) {
-                    piecesInARowCounter++
-                    println(piecesInARowCounter)
-                    if (piecesInARowCounter >= 4) {
-                        println("omg player $playerNumber, you won! no way omg")
-                        break
-                    }
-                } else {
-                    piecesInARowCounter = 0
-                }
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
             }
+            5 -> for (item in boardLineFive){
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+            }
+            4 -> for (item in boardLineFour){
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+            }
+            3 -> for (item in boardLineThree){
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+            }
+            2 -> for (item in boardLineTwo){
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+            }
+            1 -> for (item in boardLineOne){
+                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+            }
+
         }
+        //put stuff here
+
 
 
         //switching player
