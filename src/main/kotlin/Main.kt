@@ -21,14 +21,15 @@ fun main(args: Array<String>) {
             if (piecesInARowCounterMutable >= 4) {
 
                 for (row in board) {
+                    print("╌─┼═╪╬╢ ")
                     for (item in row) {
                         when (item) {
-                            0 -> print("O ")
-                            1 -> print(colorYellow + "● " + colorReset)
-                            2 -> print(colorRed + "● " + colorReset)
+                            0 -> print("□ ")
+                            1 -> print(colorYellow + "◉ " + colorReset)
+                            2 -> print(colorRed + "◈ " + colorReset)
                         }
                     }
-                    println("")
+                    println("╟╬╪═┼─╌")
                     //println(row)
                 }
 
@@ -59,6 +60,7 @@ fun main(args: Array<String>) {
 
     //counter that will show the current number of the same type of piece in a row
     var piecesInARowCounter = 0
+    var piecesInAColumnCounter = 0
 
     //setting up board
     var boardLineOne = mutableListOf(0,0,0,0,0,0,0)
@@ -69,13 +71,25 @@ fun main(args: Array<String>) {
     var boardLineSix = mutableListOf(0,0,0,0,0,0,0)
     var board = mutableListOf(boardLineOne, boardLineTwo, boardLineThree, boardLineFour, boardLineFive, boardLineSix)
 
-    //setting up map for board
-    val boardMap = mapOf(1 to colorYellow + "●" + colorReset, 2 to colorRed + "●" + colorReset)
-
+    //setting up rows and columns
+    var boardColumnOne = mutableListOf(boardLineOne[0], boardLineTwo[0], boardLineThree[0], boardLineFour[0], boardLineFive[0], boardLineSix[0])
+    var boardColumnTwo = mutableListOf(boardLineOne[1], boardLineTwo[1], boardLineThree[1], boardLineFour[1], boardLineFive[1], boardLineSix[1])
+    var boardColumnThree = mutableListOf(boardLineOne[2], boardLineTwo[2], boardLineThree[2], boardLineFour[2], boardLineFive[2], boardLineSix[2])
+    var boardColumnFour = mutableListOf(boardLineOne[3], boardLineTwo[3], boardLineThree[3], boardLineFour[3], boardLineFive[3], boardLineSix[3])
+    var boardColumnFive = mutableListOf(boardLineOne[4], boardLineTwo[4], boardLineThree[4], boardLineFour[4], boardLineFive[4], boardLineSix[4])
+    var boardColumnSix = mutableListOf(boardLineOne[5], boardLineTwo[5], boardLineThree[5], boardLineFour[5], boardLineFive[5], boardLineSix[5])
+    var boardColumnSeven = mutableListOf(boardLineOne[6], boardLineTwo[6], boardLineThree[6], boardLineFour[6], boardLineFive[6], boardLineSix[6])
+    var boardLeftDiagonalOne = mutableListOf(boardLineThree[0], boardLineFour[1], boardLineFive[2], boardLineSix[3])
+    var boardLeftDiagonalTwo = mutableListOf(boardLineTwo[0], boardLineThree[1], boardLineFour[2], boardLineFive[3], boardLineSix[4])
+    var boardLeftDiagonalThree = mutableListOf(boardLineOne[0], boardLineTwo[1], boardLineThree[2], boardLineFour[3], boardLineFive[4], boardLineSix[5])
+    var boardLeftDiagonalFour = mutableListOf(boardLineOne[1], boardLineTwo[2], boardLineThree[3], boardLineFour[4], boardLineFive[5], boardLineSix[6])
+    var boardLeftDiagonalFive = mutableListOf(boardLineOne[2], boardLineTwo[3], boardLineThree[4], boardLineFour[5], boardLineFive[6])
+    var boardLeftDiagonalSix = mutableListOf(boardLineOne[3], boardLineTwo[4], boardLineThree[5], boardLineFour[6])
 
     println("Welcome to connect four!")
 
     while (playing) {
+
 
         //clearing terminal
         print("\u001b[H"+"\u001b[2J")
@@ -89,14 +103,15 @@ fun main(args: Array<String>) {
 
         //printing the board
         for (row in board) {
+            print("╠╢ ")
             for (item in row) {
                 when (item) {
-                    0 -> print("O ")
-                    1 -> print(colorYellow + "● " + colorReset)
-                    2 -> print(colorRed + "● " + colorReset)
+                    0 -> print("□ ")
+                    1 -> print(colorYellow + "◉ " + colorReset)
+                    2 -> print(colorRed + "◈ " + colorReset)
                 }
             }
-            println("")
+            println("╟╣")
             //println(row)
         }
 
@@ -115,7 +130,7 @@ fun main(args: Array<String>) {
             continue
         }
 
-        //placing piece, testing all rows from top to bottom to see if there's a piece there.
+        //placing piece, testing all rows from top to bottom to see if there's a piece there. updating the coordinate of the last placed piece
         when {
             boardLineSix[inputInt - 1] == 0 -> {
                 boardLineSix[inputInt - 1] = playerNumber
@@ -153,6 +168,21 @@ fun main(args: Array<String>) {
         //adding space for new board
         println("\n \n \n")
 
+        //updating columns and diagonals list, will be used to check if a user has won, will be iterated through to see if there are 4 in a row in any of the lists
+        boardColumnOne = mutableListOf(boardLineOne[0], boardLineTwo[0], boardLineThree[0], boardLineFour[0], boardLineFive[0], boardLineSix[0])
+        boardColumnTwo = mutableListOf(boardLineOne[1], boardLineTwo[1], boardLineThree[1], boardLineFour[1], boardLineFive[1], boardLineSix[1])
+        boardColumnThree = mutableListOf(boardLineOne[2], boardLineTwo[2], boardLineThree[2], boardLineFour[2], boardLineFive[2], boardLineSix[2])
+        boardColumnFour = mutableListOf(boardLineOne[3], boardLineTwo[3], boardLineThree[3], boardLineFour[3], boardLineFive[3], boardLineSix[3])
+        boardColumnFive = mutableListOf(boardLineOne[4], boardLineTwo[4], boardLineThree[4], boardLineFour[4], boardLineFive[4], boardLineSix[4])
+        boardColumnSix = mutableListOf(boardLineOne[5], boardLineTwo[5], boardLineThree[5], boardLineFour[5], boardLineFive[5], boardLineSix[5])
+        boardColumnSeven = mutableListOf(boardLineOne[6], boardLineTwo[6], boardLineThree[6], boardLineFour[6], boardLineFive[6], boardLineSix[6])
+        boardLeftDiagonalOne = mutableListOf(boardLineThree[0], boardLineFour[1], boardLineFive[2], boardLineSix[3])
+        boardLeftDiagonalTwo = mutableListOf(boardLineTwo[0], boardLineThree[1], boardLineFour[2], boardLineFive[3], boardLineSix[4])
+        boardLeftDiagonalThree = mutableListOf(boardLineOne[0], boardLineTwo[1], boardLineThree[2], boardLineFour[3], boardLineFive[4], boardLineSix[5])
+        boardLeftDiagonalFour = mutableListOf(boardLineOne[1], boardLineTwo[2], boardLineThree[3], boardLineFour[4], boardLineFive[5], boardLineSix[6])
+        boardLeftDiagonalFive = mutableListOf(boardLineOne[2], boardLineTwo[3], boardLineThree[4], boardLineFour[5], boardLineFive[6])
+        boardLeftDiagonalSix = mutableListOf(boardLineOne[3], boardLineTwo[4], boardLineThree[5], boardLineFour[6])
+
         //testing to see if user won
         //testing rows
         when (lastPiecePlacedCoord[1]) {
@@ -176,8 +206,53 @@ fun main(args: Array<String>) {
             }
 
         }
-        //put stuff here
+        //testing columns
+        when (lastPiecePlacedCoord[0]) {
+            1 -> for (item in boardColumnOne){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            2 -> for (item in boardColumnTwo){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            3 -> for (item in boardColumnThree){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            4 -> for (item in boardColumnFour){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            5 -> for (item in boardColumnFive){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            6 -> for (item in boardColumnSix){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            7 -> for (item in boardColumnSeven){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
 
+        }
+        piecesInAColumnCounter = 0
+        when (lastPiecePlacedCoord[1]-lastPiecePlacedCoord[0]) {
+            2 -> for (item in boardLeftDiagonalOne){
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            1 -> for (item in boardLeftDiagonalTwo) {
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            0 -> for (item in boardLeftDiagonalThree) {
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            -1 -> for (item in boardLeftDiagonalFour) {
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            -2 -> for (item in boardLeftDiagonalFive) {
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            -3 -> for (item in boardLeftDiagonalSix) {
+                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+            }
+
+        }
 
 
         //switching player
