@@ -1,7 +1,7 @@
 //imports
 import kotlin.system.exitProcess
 
-fun main(args: Array<String>) {
+fun main() {
 
     //setting up colors
     // Everything after this is in red
@@ -12,9 +12,8 @@ fun main(args: Array<String>) {
     val colorReset = "\u001b[0m"
 
 
-    //functions
-    //function to check rows to see if there's a 4 in a row in them, will be run on the row of the last placed piece
-    fun winCheckRow(item: Int, playerNumber: Int, piecesInARowCounter: Int, board: MutableList<MutableList<Int>>): Int {
+    //function to check lines to see if there's a 4 in a row in them, will be run on the row/column/diagonals of the last placed piece
+    fun winCheck(item: Int, playerNumber: Int, piecesInARowCounter: Int, board: MutableList<MutableList<Int>>): Int {
         var piecesInARowCounterMutable = piecesInARowCounter
         if (item == playerNumber) {
             piecesInARowCounterMutable++
@@ -22,8 +21,8 @@ fun main(args: Array<String>) {
 
                 for (row in board) {
                     print("╌─┼═╪╬╢ ")
-                    for (item in row) {
-                        when (item) {
+                    for (spot in row) {
+                        when (spot) {
                             0 -> print("□ ")
                             1 -> print(colorYellow + "◉ " + colorReset)
                             2 -> print(colorRed + "◈ " + colorReset)
@@ -34,8 +33,8 @@ fun main(args: Array<String>) {
                 }
 
                 when (playerNumber) {
-                    1 -> println("omg player\u001B[38;5;226m one,\u001B[0m you won! no way omg!!!")
-                    2 -> println("omg player\u001B[38;5;197m two,\u001B[0m you won! no way omg!!!")
+                    1 -> println("omg player\u001B[38;5;226m one ◉,\u001B[0m you won! no way omg!!!")
+                    2 -> println("omg player\u001B[38;5;197m two ◈,\u001B[0m you won! no way omg!!!")
                 }
                 exitProcess(0)
             }
@@ -44,32 +43,26 @@ fun main(args: Array<String>) {
         }
         return piecesInARowCounterMutable
     }
-    fun winCheckColumn() {
-
-    }
-
-    //will be true until game is won or quit, used to keep game while loop running
-    var playing = true
 
     //shows the active player, true if the current player is player1 (yellow) false if player 2 (red) (what color piece will be placed on this turn)
     var isCurrentPlayerOne = true
     //used for editing board
     var playerNumber = 0
     //has the coordinates of where the last piece was placed (used for checking if there is a win, that way I don't have to check every possible location)
-    var lastPiecePlacedCoord = mutableListOf(0,0)
+    var lastPiecePlacedCoordinate = mutableListOf(0,0)
 
     //counter that will show the current number of the same type of piece in a row
     var piecesInARowCounter = 0
     var piecesInAColumnCounter = 0
 
     //setting up board
-    var boardLineOne = mutableListOf(0,0,0,0,0,0,0)
-    var boardLineTwo = mutableListOf(0,0,0,0,0,0,0)
-    var boardLineThree = mutableListOf(0,0,0,0,0,0,0)
-    var boardLineFour = mutableListOf(0,0,0,0,0,0,0)
-    var boardLineFive = mutableListOf(0,0,0,0,0,0,0)
-    var boardLineSix = mutableListOf(0,0,0,0,0,0,0)
-    var board = mutableListOf(boardLineOne, boardLineTwo, boardLineThree, boardLineFour, boardLineFive, boardLineSix)
+    val boardLineOne = mutableListOf(0,0,0,0,0,0,0)
+    val boardLineTwo = mutableListOf(0,0,0,0,0,0,0)
+    val boardLineThree = mutableListOf(0,0,0,0,0,0,0)
+    val boardLineFour = mutableListOf(0,0,0,0,0,0,0)
+    val boardLineFive = mutableListOf(0,0,0,0,0,0,0)
+    val boardLineSix = mutableListOf(0,0,0,0,0,0,0)
+    val board = mutableListOf(boardLineOne, boardLineTwo, boardLineThree, boardLineFour, boardLineFive, boardLineSix)
 
     //setting up rows and columns
     var boardColumnOne = mutableListOf(boardLineOne[0], boardLineTwo[0], boardLineThree[0], boardLineFour[0], boardLineFive[0], boardLineSix[0])
@@ -85,20 +78,29 @@ fun main(args: Array<String>) {
     var boardLeftDiagonalFour = mutableListOf(boardLineOne[1], boardLineTwo[2], boardLineThree[3], boardLineFour[4], boardLineFive[5], boardLineSix[6])
     var boardLeftDiagonalFive = mutableListOf(boardLineOne[2], boardLineTwo[3], boardLineThree[4], boardLineFour[5], boardLineFive[6])
     var boardLeftDiagonalSix = mutableListOf(boardLineOne[3], boardLineTwo[4], boardLineThree[5], boardLineFour[6])
+    var boardRightDiagonalOne = mutableListOf(boardLineFour[0], boardLineThree[1], boardLineTwo[2], boardLineOne[3])
+    var boardRightDiagonalTwo = mutableListOf(boardLineFive[0], boardLineFour[1], boardLineThree[2], boardLineTwo[3], boardLineOne[4])
+    var boardRightDiagonalThree = mutableListOf(boardLineSix[0], boardLineFive[1], boardLineFour[2], boardLineThree[3], boardLineTwo[4], boardLineOne[5])
+    var boardRightDiagonalFour = mutableListOf(boardLineSix[1], boardLineFive[2], boardLineFour[3], boardLineThree[4], boardLineTwo[5], boardLineOne[6])
+    var boardRightDiagonalFive = mutableListOf(boardLineSix[2], boardLineFive[3], boardLineFour[4], boardLineThree[5], boardLineTwo[6])
+    var boardRightDiagonalSix = mutableListOf(boardLineSix[3], boardLineFive[4], boardLineFour[5], boardLineThree[6])
+
+
+
 
     println("Welcome to connect four!")
 
-    while (playing) {
+    while (true) {
 
 
         //clearing terminal
         print("\u001b[H"+"\u001b[2J")
 
         //setting up the playerNumber variable, it will be used later to place the pieces so each player places a different int.
-        if (isCurrentPlayerOne) {
-            playerNumber = 1
+        playerNumber = if (isCurrentPlayerOne) {
+            1
         } else {
-            playerNumber = 2
+            2
         }
 
         //printing the board
@@ -117,8 +119,8 @@ fun main(args: Array<String>) {
 
         //printing the current player
         when (isCurrentPlayerOne) {
-            true -> println("player " + colorYellow +"one's " + colorReset + "turn")
-            false -> println("player " + colorRed + "two's " + colorReset + "turn")
+            true -> println("player " + colorYellow +"one's ◉ " + colorReset + "turn")
+            false -> println("player " + colorRed + "two's ◈ " + colorReset + "turn")
         }
         println("type the number of the row you want to place in (1-7)")
 
@@ -134,36 +136,34 @@ fun main(args: Array<String>) {
         when {
             boardLineSix[inputInt - 1] == 0 -> {
                 boardLineSix[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,6)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,6)
             }
             boardLineFive[inputInt - 1] == 0 -> {
                 boardLineFive[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,5)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,5)
             }
             boardLineFour[inputInt - 1] == 0 -> {
                 boardLineFour[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,4)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,4)
             }
             boardLineThree[inputInt - 1] == 0 -> {
                 boardLineThree[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,3)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,3)
             }
             boardLineTwo[inputInt - 1] == 0 -> {
                 boardLineTwo[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,2)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,2)
             }
             boardLineOne[inputInt - 1] == 0 -> {
                 boardLineOne[inputInt - 1] = playerNumber
-                lastPiecePlacedCoord = mutableListOf(inputInt,1)
+                lastPiecePlacedCoordinate = mutableListOf(inputInt,1)
             }
             else -> {
+                println("\n \n \n")
                 println("sorry, you cant place in this spot anymore, try again")
                 continue
             }
         }
-
-        //testing purposes, remove later
-        //println("your last play was put on coordinate $lastPiecePlacedCoord")
 
         //adding space for new board
         println("\n \n \n")
@@ -182,76 +182,111 @@ fun main(args: Array<String>) {
         boardLeftDiagonalFour = mutableListOf(boardLineOne[1], boardLineTwo[2], boardLineThree[3], boardLineFour[4], boardLineFive[5], boardLineSix[6])
         boardLeftDiagonalFive = mutableListOf(boardLineOne[2], boardLineTwo[3], boardLineThree[4], boardLineFour[5], boardLineFive[6])
         boardLeftDiagonalSix = mutableListOf(boardLineOne[3], boardLineTwo[4], boardLineThree[5], boardLineFour[6])
+        boardRightDiagonalOne = mutableListOf(boardLineFour[0], boardLineThree[1], boardLineTwo[2], boardLineOne[3])
+        boardRightDiagonalTwo = mutableListOf(boardLineFive[0], boardLineFour[1], boardLineThree[2], boardLineTwo[3], boardLineOne[4])
+        boardRightDiagonalThree = mutableListOf(boardLineSix[0], boardLineFive[1], boardLineFour[2], boardLineThree[3], boardLineTwo[4], boardLineOne[5])
+        boardRightDiagonalFour = mutableListOf(boardLineSix[1], boardLineFive[2], boardLineFour[3], boardLineThree[4], boardLineTwo[5], boardLineOne[6])
+        boardRightDiagonalFive = mutableListOf(boardLineSix[2], boardLineFive[3], boardLineFour[4], boardLineThree[5], boardLineTwo[6])
+        boardRightDiagonalSix = mutableListOf(boardLineSix[3], boardLineFive[4], boardLineFour[5], boardLineThree[6])
 
         //testing to see if user won
         //testing rows
-        when (lastPiecePlacedCoord[1]) {
+        piecesInARowCounter = 0
+        when (lastPiecePlacedCoordinate[1]) {
             6 -> for (item in boardLineSix){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
             5 -> for (item in boardLineFive){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
             4 -> for (item in boardLineFour){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
             3 -> for (item in boardLineThree){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
             2 -> for (item in boardLineTwo){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
             1 -> for (item in boardLineOne){
-                piecesInARowCounter = winCheckRow(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
             }
 
         }
         //testing columns
-        when (lastPiecePlacedCoord[0]) {
+        piecesInAColumnCounter = 0
+        when (lastPiecePlacedCoordinate[0]) {
             1 -> for (item in boardColumnOne){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             2 -> for (item in boardColumnTwo){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             3 -> for (item in boardColumnThree){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             4 -> for (item in boardColumnFour){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             5 -> for (item in boardColumnFive){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             6 -> for (item in boardColumnSix){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             7 -> for (item in boardColumnSeven){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
 
         }
         piecesInAColumnCounter = 0
-        when (lastPiecePlacedCoord[1]-lastPiecePlacedCoord[0]) {
+        when (lastPiecePlacedCoordinate[1]-lastPiecePlacedCoordinate[0]) {
             2 -> for (item in boardLeftDiagonalOne){
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             1 -> for (item in boardLeftDiagonalTwo) {
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             0 -> for (item in boardLeftDiagonalThree) {
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             -1 -> for (item in boardLeftDiagonalFour) {
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             -2 -> for (item in boardLeftDiagonalFive) {
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
             -3 -> for (item in boardLeftDiagonalSix) {
-                piecesInAColumnCounter = winCheckRow(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
             }
 
+        }
+        piecesInAColumnCounter = 0
+        when (lastPiecePlacedCoordinate[1] + lastPiecePlacedCoordinate[0]) {
+            5 -> for (item in boardRightDiagonalOne){
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            6 -> for (item in boardRightDiagonalTwo) {
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            7 -> for (item in boardRightDiagonalThree) {
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            8 -> for (item in boardRightDiagonalFour) {
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            9 -> for (item in boardRightDiagonalFive) {
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+            0 -> for (item in boardRightDiagonalSix) {
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+            }
+
+        }
+
+        if (boardLineOne.filter { it == 1 || it == 2 }.size >= 7 ) {
+            println("uh oh, no more spots left. nobody wins :(")
+            exitProcess(0)
         }
 
 
