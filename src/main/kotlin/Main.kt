@@ -23,7 +23,7 @@ fun main() {
                     print("╌─┼═╪╬╢ ")
                     for (spot in row) {
                         when (spot) {
-                            0 -> print("□ ")
+                            0 -> print("▢ ")
                             1 -> print(colorYellow + "◉ " + colorReset)
                             2 -> print(colorRed + "◈ " + colorReset)
                         }
@@ -108,7 +108,7 @@ fun main() {
             print("╠╢ ")
             for (item in row) {
                 when (item) {
-                    0 -> print("□ ")
+                    0 -> print("▢ ")
                     1 -> print(colorYellow + "◉ " + colorReset)
                     2 -> print(colorRed + "◈ " + colorReset)
                 }
@@ -127,7 +127,7 @@ fun main() {
         //getting player input for the column they want to place in, then turning it into an int and checking if it is an allowed input
         val input = readln()
         val inputInt = input.toIntOrNull()
-        if (inputInt == null || inputInt >= 8) {
+        if (inputInt == null || inputInt >= 8 || inputInt <= 0) {
             println("incorrect syntax, make sure input is a number from 1 to 7")
             continue
         }
