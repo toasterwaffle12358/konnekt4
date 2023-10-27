@@ -4,11 +4,9 @@ import kotlin.system.exitProcess
 fun main() {
 
     //setting up colors
-    // Everything after this is in red
     val colorRed = "\u001b[38;5;197m"
-    // Everything after this is in yellow
     val colorYellow = "\u001b[38;5;226m"
-    // Resets previous color codes
+    val colorBlue = "\u001B[38;5;39m"
     val colorReset = "\u001b[0m"
 
 
@@ -20,7 +18,7 @@ fun main() {
             if (piecesInARowCounterMutable >= 4) {
 
                 for (row in board) {
-                    print("╌─┼═╪╬╢ ")
+                    print("$colorBlue╌─┼═╪╬╢ $colorReset")
                     for (spot in row) {
                         when (spot) {
                             0 -> print("▢ ")
@@ -28,7 +26,7 @@ fun main() {
                             2 -> print(colorRed + "◈ " + colorReset)
                         }
                     }
-                    println("╟╬╪═┼─╌")
+                    println("$colorBlue╟╬╪═┼─╌$colorReset")
                     //println(row)
                 }
 
@@ -105,7 +103,7 @@ fun main() {
 
         //printing the board
         for (row in board) {
-            print("╠╢ ")
+            print("$colorBlue╠╢$colorReset ")
             for (item in row) {
                 when (item) {
                     0 -> print("▢ ")
@@ -113,9 +111,10 @@ fun main() {
                     2 -> print(colorRed + "◈ " + colorReset)
                 }
             }
-            println("╟╣")
+            println("$colorBlue╟╣$colorReset")
             //println(row)
         }
+        println("$colorBlue╠╢$colorReset 1 2 3 4 5 6 7 $colorBlue╟╣$colorReset")
 
         //printing the current player
         when (isCurrentPlayerOne) {
