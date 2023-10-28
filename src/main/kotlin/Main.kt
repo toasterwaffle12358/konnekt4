@@ -9,13 +9,16 @@ fun main() {
     val colorBlue = "\u001B[38;5;39m"
     val colorReset = "\u001b[0m"
 
+    //setting up game mode variable (number of pieces in a row in order to win)
+    var gameModeSetting = 4
+
 
     //function to check lines to see if there's a 4 in a row in them, will be run on the row/column/diagonals of the last placed piece
-    fun winCheck(item: Int, playerNumber: Int, piecesInARowCounter: Int, board: MutableList<MutableList<Int>>): Int {
+    fun winCheck(item: Int, playerNumber: Int, piecesInARowCounter: Int, board: MutableList<MutableList<Int>>, gameModeSetting: Int): Int {
         var piecesInARowCounterMutable = piecesInARowCounter
         if (item == playerNumber) {
             piecesInARowCounterMutable++
-            if (piecesInARowCounterMutable >= 4) {
+            if (piecesInARowCounterMutable >= gameModeSetting) {
 
                 for (row in board) {
                     print("$colorBlue╌─┼═╪╬╢ $colorReset")
@@ -92,8 +95,13 @@ fun main() {
             "8b      88    88 88 V8o88 88 V8o88 88~~~~~ 8b         88   $colorRed V88888D$colorReset \n" +
             "Y8b  d8 `8b  d8' 88  V888 88  V888 88.     Y8b  d8    88    $colorRed    88 $colorReset \n" +
             " `Y88P'  `Y88P'  VP   V8P VP   V8P Y88888P  `Y88P'    YP    $colorRed    VP $colorReset ")
+    println("Game Mode: Normal (default)")
+    println("Type h for Advanced mode (5 in a line to win)")
     println("press enter to continue")
-    readln()
+    if (readln() == "h") {
+        println("Advanced mode enabled")
+        gameModeSetting = 5
+    }
 
     while (true) {
 
@@ -200,22 +208,22 @@ fun main() {
         piecesInARowCounter = 0
         when (lastPiecePlacedCoordinate[1]) {
             6 -> for (item in boardLineSix){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
             5 -> for (item in boardLineFive){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
             4 -> for (item in boardLineFour){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
             3 -> for (item in boardLineThree){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
             2 -> for (item in boardLineTwo){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
             1 -> for (item in boardLineOne){
-                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board)
+                piecesInARowCounter = winCheck(item, playerNumber, piecesInARowCounter, board, gameModeSetting)
             }
 
         }
@@ -223,69 +231,69 @@ fun main() {
         piecesInAColumnCounter = 0
         when (lastPiecePlacedCoordinate[0]) {
             1 -> for (item in boardColumnOne){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             2 -> for (item in boardColumnTwo){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             3 -> for (item in boardColumnThree){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             4 -> for (item in boardColumnFour){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             5 -> for (item in boardColumnFive){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             6 -> for (item in boardColumnSix){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             7 -> for (item in boardColumnSeven){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
 
         }
         piecesInAColumnCounter = 0
         when (lastPiecePlacedCoordinate[1]-lastPiecePlacedCoordinate[0]) {
             2 -> for (item in boardLeftDiagonalOne){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             1 -> for (item in boardLeftDiagonalTwo) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             0 -> for (item in boardLeftDiagonalThree) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             -1 -> for (item in boardLeftDiagonalFour) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             -2 -> for (item in boardLeftDiagonalFive) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             -3 -> for (item in boardLeftDiagonalSix) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
 
         }
         piecesInAColumnCounter = 0
         when (lastPiecePlacedCoordinate[1] + lastPiecePlacedCoordinate[0]) {
             5 -> for (item in boardRightDiagonalOne){
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             6 -> for (item in boardRightDiagonalTwo) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             7 -> for (item in boardRightDiagonalThree) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             8 -> for (item in boardRightDiagonalFour) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             9 -> for (item in boardRightDiagonalFive) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
             0 -> for (item in boardRightDiagonalSix) {
-                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board)
+                piecesInAColumnCounter = winCheck(item, playerNumber, piecesInAColumnCounter, board, gameModeSetting)
             }
 
         }
