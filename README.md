@@ -1,5 +1,7 @@
 # kotlin-connect4
 Terminal based simple connect 4 game written in kotlin.
+<br>
+Now with an all new, 5 in a row game mode!
 
 ## The classic 2 player cometetive strategy game has been brought to kotlin!
 This innovative program uses cutting edge technology such as ANSI escape code colors from the 1970s to deliver a stunning user experience. 
@@ -9,11 +11,11 @@ For many years the world has been without a terminal based connect 4 game writte
 ## screenshots
 * Wonderful welcome screen:
   <br>
-  ![Screenshot1](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/4098b860-34e4-49f5-b2f4-72552037415f)
+  ![Screenshot from 2023-10-28 12-03-17](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/e3ee27a1-6fcd-4b96-8bc0-32221f1bacc9)
   <br>
 * Engaging gameplay:
   <br>
-  ![Screenshot2](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/15d7958c-4f26-4521-ae66-4d28975fd272)
+  ![Screenshot from 2023-10-28 12-04-17](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/ddf49799-a38f-4a41-9cd0-c3997aa8eb02)
   <br>
 * Victory:
   <br>
@@ -21,8 +23,8 @@ For many years the world has been without a terminal based connect 4 game writte
   <br>
 * Next gen user input filtering and processing:
   <br>
-  ![Screenshot4](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/6300ace5-09bb-47ce-81d7-c6ae16f654f0)
-  ![Screenshot5](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/3f803dd9-21da-4b62-822f-e622f36d2dbc)
+  ![Screenshot from 2023-10-28 12-06-24](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/f5738182-a83b-4524-899e-edcbdd064ce3)
+  ![Screenshot from 2023-10-28 12-06-38](https://github.com/toasterwaffle12358/kotlin-connect4/assets/115607216/448ece5d-04ea-4af1-8b5c-70ea5456d93a)
   <br>
 * Advanced AI stalemate/tie detection:
   <br>
@@ -34,3 +36,4 @@ just run the jar
 <br>
 ### installing from source
 idk, I just compiled everything in intellij.
+
