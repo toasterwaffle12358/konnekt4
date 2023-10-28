@@ -121,7 +121,7 @@ fun main() {
             true -> println("player " + colorYellow +"one's ◉ " + colorReset + "turn")
             false -> println("player " + colorRed + "two's ◈ " + colorReset + "turn")
         }
-        println("type the number of the row you want to place in (1-7)")
+        println("type the number of the column you want to place in (1-7)")
 
         //getting player input for the column they want to place in, then turning it into an int and checking if it is an allowed input
         val input = readln()
