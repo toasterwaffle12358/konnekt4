@@ -32,7 +32,7 @@ For many years the world has been without a terminal based connect 4 game writte
 
 ## Installing/Running
 ### Jar
-just run the jar
+just run the jar, you can find it on the [latest release](https://github.com/toasterwaffle12358/kotlin-connect4/releases/latest/)
 <br>
 ### installing from source
 idk, I just compiled everything in intellij.
