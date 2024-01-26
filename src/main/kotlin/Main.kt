@@ -203,8 +203,8 @@ fun main() {
         boardRightDiagonalSix = mutableListOf(boardLineSix[3], boardLineFive[4], boardLineFour[5], boardLineThree[6])
         val boardRowsList: MutableList<MutableList<Int>> = mutableListOf(boardLineOne, boardLineTwo, boardLineThree, boardLineFour, boardLineFive, boardLineSix)
         val boardColumnsList: MutableList<MutableList<Int>> = mutableListOf(boardColumnOne, boardColumnTwo, boardColumnThree, boardColumnFour, boardColumnFive, boardColumnSix, boardColumnSeven)
-        val boardLeftDiagonalsList: MutableList<MutableList<Int>> = mutableListOf(boardLeftDiagonalOne, boardLeftDiagonalTwo, boardLeftDiagonalThree, boardLeftDiagonalFour, boardLeftDiagonalFive, boardLeftDiagonalSix)
-        val boardRightDiagonalsList: MutableList<MutableList<Int>> = mutableListOf(boardRightDiagonalOne, boardRightDiagonalTwo, boardRightDiagonalThree, boardRightDiagonalFour, boardRightDiagonalFive, boardRightDiagonalSix)
+        val boardLeftDiagonalsList: MutableList<MutableList<Int>> = mutableListOf(boardLeftDiagonalOne, boardLeftDiagonalTwo, boardLeftDiagonalThree, boardLeftDiagonalFour, boardLeftDiagonalFive, boardLeftDiagonalSix, boardLeftDiagonalSix)
+        val boardRightDiagonalsList: MutableList<MutableList<Int>> = mutableListOf(boardRightDiagonalOne, boardRightDiagonalTwo, boardRightDiagonalThree, boardRightDiagonalFour, boardRightDiagonalFive, boardRightDiagonalSix, boardRightDiagonalSix)
 
         //will be used for checking win condition will be iterated through and each item will be used as input condition in a for loop.
         val allBoardScanMethods: MutableList<MutableList<MutableList<Int>>> = mutableListOf(boardRowsList, boardColumnsList, boardLeftDiagonalsList, boardRightDiagonalsList)
@@ -220,7 +220,10 @@ fun main() {
                 1 -> coordinateInfo = lastPiecePlacedCoordinate[1]
                 2 -> coordinateInfo = lastPiecePlacedCoordinate[0]
                 3 -> coordinateInfo = (3-(lastPiecePlacedCoordinate[1]-lastPiecePlacedCoordinate[0]))
+                4 -> coordinateInfo = ((lastPiecePlacedCoordinate[1] + lastPiecePlacedCoordinate[0])-4)
             }
+            println("loop run number $scanLoopCount")
+            println("the coordinate info is: $coordinateInfo")
             when (coordinateInfo) {
                 1 -> for (item in scanMethod[0]){
                     piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
@@ -245,28 +248,6 @@ fun main() {
                 }
 
             }
-        }
-        piecesInALineCounter = 0
-        when (lastPiecePlacedCoordinate[1] + lastPiecePlacedCoordinate[0]) {
-            5 -> for (item in boardRightDiagonalOne){
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-            6 -> for (item in boardRightDiagonalTwo) {
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-            7 -> for (item in boardRightDiagonalThree) {
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-            8 -> for (item in boardRightDiagonalFour) {
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-            9 -> for (item in boardRightDiagonalFive) {
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-            0 -> for (item in boardRightDiagonalSix) {
-                piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
-            }
-
         }
 
         if (boardLineOne.filter { it == 1 || it == 2 }.size >= 7 ) {
