@@ -222,8 +222,6 @@ fun main() {
                 3 -> coordinateInfo = (3-(lastPiecePlacedCoordinate[1]-lastPiecePlacedCoordinate[0]))
                 4 -> coordinateInfo = ((lastPiecePlacedCoordinate[1] + lastPiecePlacedCoordinate[0])-4)
             }
-            println("loop run number $scanLoopCount")
-            println("the coordinate info is: $coordinateInfo")
             when (coordinateInfo) {
                 1 -> for (item in scanMethod[0]){
                     piecesInALineCounter = winCheck(item, playerNumber, piecesInALineCounter, board, gameModeSetting)
