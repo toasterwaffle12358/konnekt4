@@ -8,6 +8,7 @@ fun main() {
     val colorYellow = "\u001b[38;5;226m"
     val colorBlue = "\u001B[38;5;39m"
     val colorReset = "\u001b[0m"
+    val colorLightPurple = "\u001B[38;2;190;154;214m"
 
     //setting up game mode variable (number of pieces in a row in order to win)
     var gameModeSetting = 4
@@ -25,8 +26,8 @@ fun main() {
                     for (spot in row) {
                         when (spot) {
                             0 -> print("▢ ")
-                            1 -> print(colorYellow + "◉ " + colorReset)
-                            2 -> print(colorRed + "◈ " + colorReset)
+                            1 -> print("$colorYellow◉ $colorReset")
+                            2 -> print("$colorRed◈ $colorReset")
                         }
                     }
                     println("$colorBlue╟╬╪═┼─╌$colorReset")
@@ -48,12 +49,12 @@ fun main() {
     //shows the active player, true if the current player is player1 (yellow) false if player 2 (red) (what color piece will be placed on this turn)
     var isCurrentPlayerOne = true
     //used for editing board
-    var playerNumber = 0
+    var playerNumber: Int
     //has the coordinates of where the last piece was placed (used for checking if there is a win, that way I don't have to check every possible location)
-    var lastPiecePlacedCoordinate = mutableListOf(0,0)
+    var lastPiecePlacedCoordinate: MutableList<Int>
 
     //counter that will show the current number of the same type of piece in a row
-    var piecesInALineCounter = 0
+    var piecesInALineCounter: Int
 
     //setting up board
     val boardLineOne = mutableListOf(0,0,0,0,0,0,0)
@@ -65,35 +66,44 @@ fun main() {
     val board = mutableListOf(boardLineOne, boardLineTwo, boardLineThree, boardLineFour, boardLineFive, boardLineSix)
 
     //setting up rows and columns
-    var boardColumnOne = mutableListOf(boardLineOne[0], boardLineTwo[0], boardLineThree[0], boardLineFour[0], boardLineFive[0], boardLineSix[0])
-    var boardColumnTwo = mutableListOf(boardLineOne[1], boardLineTwo[1], boardLineThree[1], boardLineFour[1], boardLineFive[1], boardLineSix[1])
-    var boardColumnThree = mutableListOf(boardLineOne[2], boardLineTwo[2], boardLineThree[2], boardLineFour[2], boardLineFive[2], boardLineSix[2])
-    var boardColumnFour = mutableListOf(boardLineOne[3], boardLineTwo[3], boardLineThree[3], boardLineFour[3], boardLineFive[3], boardLineSix[3])
-    var boardColumnFive = mutableListOf(boardLineOne[4], boardLineTwo[4], boardLineThree[4], boardLineFour[4], boardLineFive[4], boardLineSix[4])
-    var boardColumnSix = mutableListOf(boardLineOne[5], boardLineTwo[5], boardLineThree[5], boardLineFour[5], boardLineFive[5], boardLineSix[5])
-    var boardColumnSeven = mutableListOf(boardLineOne[6], boardLineTwo[6], boardLineThree[6], boardLineFour[6], boardLineFive[6], boardLineSix[6])
-    var boardLeftDiagonalOne = mutableListOf(boardLineThree[0], boardLineFour[1], boardLineFive[2], boardLineSix[3])
-    var boardLeftDiagonalTwo = mutableListOf(boardLineTwo[0], boardLineThree[1], boardLineFour[2], boardLineFive[3], boardLineSix[4])
-    var boardLeftDiagonalThree = mutableListOf(boardLineOne[0], boardLineTwo[1], boardLineThree[2], boardLineFour[3], boardLineFive[4], boardLineSix[5])
-    var boardLeftDiagonalFour = mutableListOf(boardLineOne[1], boardLineTwo[2], boardLineThree[3], boardLineFour[4], boardLineFive[5], boardLineSix[6])
-    var boardLeftDiagonalFive = mutableListOf(boardLineOne[2], boardLineTwo[3], boardLineThree[4], boardLineFour[5], boardLineFive[6])
-    var boardLeftDiagonalSix = mutableListOf(boardLineOne[3], boardLineTwo[4], boardLineThree[5], boardLineFour[6])
-    var boardRightDiagonalOne = mutableListOf(boardLineFour[0], boardLineThree[1], boardLineTwo[2], boardLineOne[3])
-    var boardRightDiagonalTwo = mutableListOf(boardLineFive[0], boardLineFour[1], boardLineThree[2], boardLineTwo[3], boardLineOne[4])
-    var boardRightDiagonalThree = mutableListOf(boardLineSix[0], boardLineFive[1], boardLineFour[2], boardLineThree[3], boardLineTwo[4], boardLineOne[5])
-    var boardRightDiagonalFour = mutableListOf(boardLineSix[1], boardLineFive[2], boardLineFour[3], boardLineThree[4], boardLineTwo[5], boardLineOne[6])
-    var boardRightDiagonalFive = mutableListOf(boardLineSix[2], boardLineFive[3], boardLineFour[4], boardLineThree[5], boardLineTwo[6])
-    var boardRightDiagonalSix = mutableListOf(boardLineSix[3], boardLineFive[4], boardLineFour[5], boardLineThree[6])
+    var boardColumnOne: MutableList<Int>
+    var boardColumnTwo: MutableList<Int>
+    var boardColumnThree: MutableList<Int>
+    var boardColumnFour: MutableList<Int>
+    var boardColumnFive: MutableList<Int>
+    var boardColumnSix: MutableList<Int>
+    var boardColumnSeven: MutableList<Int>
+    var boardLeftDiagonalOne: MutableList<Int>
+    var boardLeftDiagonalTwo: MutableList<Int>
+    var boardLeftDiagonalThree: MutableList<Int>
+    var boardLeftDiagonalFour: MutableList<Int>
+    var boardLeftDiagonalFive: MutableList<Int>
+    var boardLeftDiagonalSix: MutableList<Int>
+    var boardRightDiagonalOne: MutableList<Int>
+    var boardRightDiagonalTwo: MutableList<Int>
+    var boardRightDiagonalThree: MutableList<Int>
+    var boardRightDiagonalFour: MutableList<Int>
+    var boardRightDiagonalFive: MutableList<Int>
+    var boardRightDiagonalSix: MutableList<Int>
 
 
 
     println("welcome!")
+    /*
     println(" .o88b.  .d88b.  d8b   db d8b   db d88888b  .o88b. d888888b $colorRed  j88D $colorReset \n" +
             "d8P  Y8 .8P  Y8. 888o  88 888o  88 88'     d8P  Y8 `~~88~~' $colorRed j8~88 $colorReset \n" +
             "8P      88    88 88V8o 88 88V8o 88 88ooooo 8P         88   $colorRed j8' 88 $colorReset \n" +
             "8b      88    88 88 V8o88 88 V8o88 88~~~~~ 8b         88   $colorRed V88888D$colorReset \n" +
             "Y8b  d8 `8b  d8' 88  V888 88  V888 88.     Y8b  d8    88    $colorRed    88 $colorReset \n" +
             " `Y88P'  `Y88P'  VP   V8P VP   V8P Y88888P  `Y88P'    YP    $colorRed    VP $colorReset ")
+     */
+    println("██╗  ██╗ ██████╗ ███╗   ██╗███╗   ██╗███████╗ $colorLightPurple┌─██╗──██╗─████████╗─┐$colorRed     j88D $colorReset \n" +
+            "██║ ██╔╝██╔═══██╗████╗  ██║████╗  ██║██╔════╝ $colorLightPurple│ ██║ ██╔╝ ╚══██╔══╝ │$colorRed    j8~88 $colorReset \n" +
+            "█████╔╝ ██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗   $colorLightPurple│ █████╔╝     ██║    │$colorRed   j8' 88 $colorReset \n" +
+            "██╔═██╗ ██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝   $colorLightPurple│ ██╔═██╗     ██║    │$colorRed   V88888D$colorReset \n" +
+            "██║  ██╗╚██████╔╝██║ ╚████║██║ ╚████║███████╗ $colorLightPurple│ ██║  ██╗    ██║    │$colorRed       88 $colorReset \n" +
+            "╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝ $colorLightPurple└─╚═╝──╚═╝────╚═╝────┘$colorRed       VP $colorReset ")
+
     println("Game Mode: Normal (default)")
     println("Type h for Advanced mode (5 in a line to win)")
     println("press enter to continue")
@@ -121,8 +131,8 @@ fun main() {
             for (item in row) {
                 when (item) {
                     0 -> print("▢ ")
-                    1 -> print(colorYellow + "◉ " + colorReset)
-                    2 -> print(colorRed + "◈ " + colorReset)
+                    1 -> print("$colorYellow◉ $colorReset")
+                    2 -> print("$colorRed◈ $colorReset")
                 }
             }
             println("$colorBlue╟╣$colorReset")
