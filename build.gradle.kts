@@ -8,14 +8,13 @@ tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-
 plugins {
     kotlin("jvm") version "1.9.0"
     application
 }
 
 group = "org.example"
-version = "1.0-SNAPSHOT"
+version = "1.2.3"
 
 repositories {
     mavenCentral()
@@ -23,7 +22,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.googlecode.lanterna:lanterna:3.2.0-alpha1")
 }
 
 tasks.test {
